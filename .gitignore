@@ -1,0 +1,17 @@
+.DS_Store
+.idea/
+.sass-cache/
+dump.rdb
+*.iml
+node_modules/
+__pycache__/
+unopico/static/apps/*
+unopico/static/css/*/*.map
+unopico/static/css/*.map
+ansible/roles/
+*.zip
+zip_sample.zip
+npm-debug.log
+unopico.js
+unopico.js.map
+unopico.min.*

@@ -1,28 +1,4 @@
-<executor>
-    <div class={'animated bounceInLeft': mainDB} if={mainDB}>
-
-        <h4 if={!videos}>Loading Database ... </h4>
-
-        <table id="videos-list" if={videos.length}>
-            <thead>
-                <tr>
-                    <th>From</th>
-                    <th>When</th>
-                    <th>Link</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr each={video, i in videos} no-reorder>
-                    <td class="author">{video.author}</td>
-                    <td class="timestamp">{video.creation_timestamp}</td>
-                    <td class="link"><a target="new_{i}" href="{video.vod_path}">VIDEO</a></td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="pagination">
-            <a href="#"></a>
-        </div>
-    </div>
+riot.tag2('executor', '<div class="{\'animated bounceInLeft\': mainDB}" if="{mainDB}"> <h4 if="{!videos}">Loading Database ... </h4> <table id="videos-list" if="{videos.length}"> <thead> <tr> <th>From</th> <th>When</th> <th>Link</th> </tr> </thead> <tbody> <tr each="{video, i in videos}" no-reorder> <td class="author">{video.author}</td> <td class="timestamp">{video.creation_timestamp}</td> <td class="link"><a target="new_{i}" href="{video.vod_path}">VIDEO</a></td> </tr> </tbody> </table> <div class="pagination"> <a href="#"></a> </div> </div>', '', '', function(opts) {
 
     var self = this
     var worker = new Worker('db.js')
@@ -52,4 +28,4 @@
         self.update()
     })
     this.mixin(riotAnimate)
-</executor>
+}, '{ }');

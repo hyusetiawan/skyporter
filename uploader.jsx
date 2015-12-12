@@ -1,4 +1,24 @@
-riot.tag2('uploader', '<ol if="{!hasMainDB}" riot-leave="bounceOutRight" id="steps" ondrop="{onDrop}" ondragover="{onDragOver}" ondragenter="{onDragEnter}" ondragleave="{onDragLeave}" class="{\'dragging\': isDragging}"> <li> <p>Fill the following input to get the location where your Skype data is located</p> <input name="osname" value="{osname}" onkeyup="{onDirChange}" type="text" placeholder="your computer username"> <input name="username" value="{username}" onkeyup="{onDirChange}" type="text" placeholder="your skype username"> <input id="save-button" onclick="{onSaveButton}" type="button" value="save names"> <br> <div class="db-path" show="{username && osname}"> <span>{mainDBPath}</span> <input id="copy-button" type="button" value="copy"> </div> </li> <li> Copy the path above and paste it to open the folder, to find a file called "main.db" like so: <img class="guide" riot-src="img/{os}/open-folder.png"> </li> <li> Drag and drop the main.db from that folder, to this window. </li> </ol>', '', '', function(opts) {
+<uploader>
+<ol if={!hasMainDB} riot-leave="bounceOutRight" id="steps" ondrop={onDrop} ondragover={onDragOver}
+    ondragenter={onDragEnter} ondragleave={onDragLeave} class={'dragging': isDragging}>
+    <li>
+        <p>Fill the following input to get the location where your Skype data is located</p>
+        <input name="osname" value="{osname}" onkeyup={onDirChange} type="text" placeholder="your computer username" />
+        <input name="username" value="{username}" onkeyup={onDirChange} type="text" placeholder="your skype username" />
+        <input id="save-button" onclick={onSaveButton} type="button" value="save names" /> <br />
+        <div class="db-path" show={username && osname}>
+            <span>{mainDBPath}</span>
+            <input id="copy-button" type="button" value="copy" />
+        </div>
+    </li>
+    <li>
+        Copy the path above and paste it to open the folder, to find a file called "main.db" like so:
+        <img class="guide" riot-src="img/{os}/open-folder.png" />
+    </li>
+    <li>
+        Drag and drop the main.db from that folder, to this window.
+    </li>
+</ol>
 this.mixin(riotAnimate)
 var os="Unknown OS";
 if (navigator.appVersion.indexOf("Win")!=-1) os="win";
@@ -19,41 +39,41 @@ var dbPaths = {
     mac: '/Users/{osname}/Library/Application Support/Skype/{username}/'
 }
 
-this.onDirChange = function(e) {
+onDirChange(e) {
     if(e) this[e.target.name] = e.target.value
     this.mainDBPath = (dbPaths[this.os] + '').replace('{osname}', this.osname).replace('{username}', this.username)
-}.bind(this)
+}
 
-this.onDragEnter = function(e) {
+onDragEnter(e) {
     e.preventDefault()
     this.isDragging = true
-}.bind(this)
+}
 
-this.onDragOver = function(e) {
+onDragOver(e) {
     e.preventDefault()
     this.isDragging = true
-}.bind(this)
+}
 
-this.onDrop = function(e){
+onDrop(e){
     this.isDragging = false
     e.stopPropagation()
     e.preventDefault()
     var mainDB = e.dataTransfer.files[0]
     this.hasMainDB = true
     PubSub.publish('uploader.maindb', mainDB)
-}.bind(this)
+}
 
-this.onDragLeave = function(e) {
+onDragLeave(e) {
     e.preventDefault()
     this.isDragging = false
-}.bind(this)
+}
 
-this.onSaveButton = function(e) {
+onSaveButton(e) {
     $state.set({
         osname: this.osname,
         username: this.username
     })
-}.bind(this)
+}
 
 this.on('mount', function(){
     var copyButton = new Clipboard('#copy-button', {
@@ -64,4 +84,4 @@ this.on('mount', function(){
 })
 
 this.onDirChange()
-}, '{ }');
+</uploader>
